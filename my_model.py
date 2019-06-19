@@ -32,25 +32,28 @@ class GraphClassifier(nn.Module):
 		x2 = self.layer2(x2)
 		# --------1-------------#
 		new1 = []
-		for i in range(len(adj1[0])):
-			tmp = torch.zeros(len(adj1[0])).float()
-			degree1 = adj1.sum(dim=1)
+		for i in range(len(adj1[0])):  # 0 - n
+			tmp = torch.zeros(1, 64).float().cuda()  # 1*n
+			degree1 = adj1.sum(dim=1)  # 1*n
 			for j in range(len(adj1[0])):
 				if adj1[i][j] == 1:
+					print(tmp.size())
 					print("---", self.alpha1[i][j].size(), self.W.size(), x1[j].size())
 					tmp += self.alpha1[i][j] * self.W * x1[j]
 			tmp /= degree1[i] * 1.0
+			tmp += x1[i]
 			new1.append(tmp)
 		new1 = torch.cat(tuple(new1), 0)
 		# --------2-------------#
 		new2 = []
 		for i in range(len(adj2[0])):
-			tmp = torch.zeros(len(adj2[0])).float()
-			degree2 = adj2.sum(axis=1)
+			tmp = torch.zeros(1, 64).float().cuda()
+			degree2 = adj2.sum(dim=1)
 			for j in range(len(adj2[0])):
 				if adj2[i][j] == 1:
 					tmp += self.alpha2[i][j] * self.W * x2[j]
 			tmp /= degree2[i] * 1.0
+			tmp += x2[i]
 			new2.append(tmp)
 		new2 = torch.cat(tuple(new2), 0)
 
