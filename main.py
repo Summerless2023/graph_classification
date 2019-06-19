@@ -21,8 +21,10 @@ if __name__ == '__main__':
 	model = GraphClassifier(max_node_num1, max_node_num2)
 	model = model.cuda()
 	print("moved model to gpu")
+
 	criterion = nn.CrossEntropyLoss()
 	optimizer = optim.SGD(model.parameters(), lr=learning_rate)
+
 	for epoch in range(num_epoches):
 		print("第%d轮训练" % epoch)
 		for i, tmp in enumerate(data):
@@ -39,4 +41,23 @@ if __name__ == '__main__':
 			optimizer.step()
 			print(print_loss)
 	# 验证部分
-	###
+	model.eval()
+	eval_loss = 0
+	eval_acc = 0
+	for tmp in data:
+		img, label = tmp
+		img = img.view(img.size(0), -1)
+		if torch.cuda.is_available():
+			img = img.cuda()
+			label = label.cuda()
+
+		out = model(img)
+		loss = criterion(out, label)
+		eval_loss += loss.data.item() * label.size(0)
+		_, pred = torch.max(out, 1)
+		num_correct = (pred == label).sum()
+		eval_acc += num_correct.item()
+	print('Test Loss: {:.6f}, Acc: {:.6f}'.format(
+		eval_loss / (len(data)),
+		eval_acc / (len(data))
+	))
