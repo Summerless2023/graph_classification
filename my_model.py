@@ -56,8 +56,8 @@ class GraphClassifier(nn.Module):
 			tmp += x2[i]
 			new2.append(tmp)
 		new2 = torch.cat(tuple(new2), 0)
-
 		x = self.classfier(torch.cat((new1, new2), 0))
+		print("x.classfier.size():", x.size())
 		x = self.softmax(x)
 		print("x.size()", x.size())
 		return x
