@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from Entity import GraphDataset
 
 
-# 上采样
+# 上采样部分代码
 def get_max_nodenum(my_graphs):
 	max_node_num1 = 0
 	max_node_num2 = 0
