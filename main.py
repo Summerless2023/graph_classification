@@ -1,13 +1,14 @@
+# -*- coding: utf-8 -*-
 import os
-
 import torch
 from torch import nn, optim
 from load_data import init_data
 from load_data import load_to_dataset
 from my_model import GraphClassifier
 
+print("测试中文")
 # 相关配置
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 datadir = "./data"
 dataname = "DD"
 batch_size = 1

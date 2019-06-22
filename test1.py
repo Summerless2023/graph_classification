@@ -1,9 +1,14 @@
-import numpy as np
+import pyttsx3
+import time
 
-a = np.zeros(1, dtype=int)
+engine = pyttsx3.init()
 
-print(a)
+#运行并且等待
+#
 
-a[0] = 1
-
-print(a)
+while True:
+	localtime = time.strftime("%S", time.localtime())
+	print(localtime)
+	engine.say(localtime)
+	print(localtime)
+	engine.runAndWait()

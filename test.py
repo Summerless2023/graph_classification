@@ -40,9 +40,15 @@ model = Encoder(100)
 #
 #
 # print(b[0][1] * a)
+#
+# z = nn.Parameter(torch.rand(3, 3))
+# w = nn.Parameter(torch.zeros(1, 1))
+# y = torch.tensor(3)
+#
+# print((z[1][1] * w * y)/1)
+import numpy as np
 
-z = nn.Parameter(torch.rand(3, 3))
-w = nn.Parameter(torch.zeros(1, 1))
-y = torch.tensor(3)
-
-print((z[1][1] * w * y)/1)
+x = np.empty([3,2], dtype = int)
+x[0][0] = 1
+x[1][1] = 1
+print(np.sum(x==1))
