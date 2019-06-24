@@ -49,11 +49,11 @@ model = Encoder(100)
 import numpy as np
 
 #x = np.empty([3,2], dtype = int)
-x = torch.Tensor([[1, 2], [3, 4], [5, 6]])
-print(x)
-
-import torch.nn.functional as F
-y = F.pad(x,(0,0,0,0),value=0)
-print(y)
-
-
+# x = torch.Tensor([[1, 2], [3, 4], [5, 6]])
+# print(x)
+#
+# import torch.nn.functional as F
+# y = F.pad(x,(0,0,0,0),value=0)
+# print(y)
+A = np.arange(95,99).reshape(2,2)
+print(A)

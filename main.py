@@ -5,7 +5,6 @@ from load_data import init_data
 from load_data import load_to_dataset
 from my_model import GraphClassifier
 
-print("测试中文")
 # 相关配置
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 datadir = "./data"

@@ -58,4 +58,5 @@ class GraphClassifier(nn.Module):
 			tmp += x[i]
 			new.append(tmp)
 		new = torch.cat(tuple(new), 0)
+		print("self_attention finished")
 		return new

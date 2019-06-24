@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader
 from Entity import GraphDataset
 import torch.nn.functional as F
 
+
 # 上采样部分代码
 def get_max_nodenum(my_graphs):
 	max_node_num1 = 0
@@ -157,8 +158,12 @@ def load_to_dataset(my_graphs):
 		graph.cal_lap(max_node_num1, max_node_num2)
 		lap_mats1.append(graph.nor_lap_mat1)
 		lap_mats2.append(graph.nor_lap_mat2)
-		adjs1.append(F.pad(graph.adj1,0,max_node_num1-len(graph.adj1[0]),0,max_node_num1-len(graph.adj1[0])))
-		adjs2.append(F.pad(graph.adj2,0,max_node_num2-len(graph.adj2[0]),0,max_node_num2-len(graph.adj2[0])))
+		adjs1.append(
+			np.pad(graph.adj1, ((0, max_node_num1 - len(graph.adj1[0])), (0, max_node_num1 - len(graph.adj1[0]))),
+			       'constant', constant_values=((0, 0), (0, 0))))
+		adjs2.append(
+			np.pad(graph.adj2, ((0, max_node_num2 - len(graph.adj2[0])), (0, max_node_num2 - len(graph.adj2[0]))),
+			       'constant', constant_values=((0, 0), (0, 0))))
 		labels.append(graph.label)
 	data = DataLoader(dataset=GraphDataset(lap_mats1, lap_mats2, adjs1, adjs2, labels), batch_size=1, shuffle=True)
 	return data
