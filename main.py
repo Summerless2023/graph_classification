@@ -32,7 +32,10 @@ if __name__ == '__main__':
 			input1, input2, adj1, adj2, label = tmp
 			del tmp
 			output = model.forward(input1[0], input2[0], adj1[0], adj2[0])
+			print('output:',output)
+			print('output.size():', output.size())
 			_, pre_label = torch.max(output, 1)
+			print('_,pre_label :',_,pre_label)
 			loss = criterion(pre_label, label)
 			print_loss = loss.data.item()
 			optimizer.zero_grad()
