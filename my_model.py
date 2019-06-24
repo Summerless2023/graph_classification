@@ -51,7 +51,7 @@ class GraphClassifier(nn.Module):
 		for i in range(len(adj[0])):  # 0 - n
 			if i%1000 == 0:
 				print('i=', i)
-			tmp = torch.zeros(1, 64).float().cuda()  # 1*n
+			tmp = torch.zeros(1, 64).float().cuda(1)  # 1*n
 			degree1 = adj.sum(dim=1)  # 1*n
 			for j in range(len(adj[0])):
 				if adj[i][j] == 1:

@@ -18,7 +18,7 @@ if __name__ == '__main__':
 	data = load_to_dataset(my_graphs)
 	print("数据处理完成")
 	model = GraphClassifier(max_node_num1, max_node_num2)
-	model = model.cuda()
+	model = model.cuda(1)
 	print("moved model to gpu")
 
 	criterion = nn.CrossEntropyLoss()
@@ -50,8 +50,8 @@ if __name__ == '__main__':
 		img, label = tmp
 		img = img.view(img.size(0), -1)
 		if torch.cuda.is_available():
-			img = img.cuda()
-			label = label.cuda()
+			img = img.cuda(1)
+			label = label.cuda(1)
 
 		out = model(img)
 		loss = criterion(out, label)
