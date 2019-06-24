@@ -24,8 +24,8 @@ class GraphClassifier(nn.Module):
 		self.W = nn.Parameter(torch.zeros(1, 1))
 		self.alpha1 = nn.Parameter(torch.rand(node_num1, node_num1))
 		self.alpha2 = nn.Parameter(torch.rand(node_num2, node_num2))
-		self.classfier = nn.Linear((node_num1 + node_num2) * 64, 2)
-		self.softmax = nn.Softmax(dim=1)
+		self.classfier = nn.Linear(64, 2)
+		self.softmax = nn.Softmax(dim=0)
 
 	def forward(self, x1, x2, adj1, adj2):
 		x1 = self.layer1(x1)
@@ -47,6 +47,8 @@ class GraphClassifier(nn.Module):
 		print("adj.size = ", adj.size())
 		new = []
 		for i in range(len(adj[0])):  # 0 - n
+			if i%1000 == 0:
+				print('i=', i)
 			tmp = torch.zeros(1, 64).float().cuda()  # 1*n
 			degree1 = adj.sum(dim=1)  # 1*n
 			for j in range(len(adj[0])):
