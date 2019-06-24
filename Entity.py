@@ -37,11 +37,11 @@ class GraphDataset(Dataset):
 		label = self.labels[index]
 		tmp_label = np.zeros((1, 1), dtype=np.int)
 		tmp_label[0] = label
-		return (torch.from_numpy(self.lap_mats1[index]).float().cuda(1),
-		        torch.from_numpy(self.lap_mats2[index]).float().cuda(1),
-		        torch.from_numpy(self.adjs1[index]).cuda(1),
-		        torch.from_numpy(self.adjs2[index]).cuda(1),
-		        torch.from_numpy(tmp_label).cuda(1))
+		return (torch.from_numpy(self.lap_mats1[index]).float().cuda(),
+		        torch.from_numpy(self.lap_mats2[index]).float().cuda(),
+		        torch.from_numpy(self.adjs1[index]).cuda(),
+		        torch.from_numpy(self.adjs2[index]).cuda(),
+		        torch.from_numpy(tmp_label).cuda())
 
 	def __len__(self):
 		return len(self.lap_mats1)

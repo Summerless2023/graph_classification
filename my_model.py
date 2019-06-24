@@ -29,30 +29,33 @@ class GraphClassifier(nn.Module):
 
 	def forward(self, x1, x2, adj1, adj2):
 		x1 = self.layer1(x1)
+		print("x1 = ", x1)
 		x2 = self.layer2(x2)
+		print("x2 = ", x2)
 		new1 = self.self_attention(x1, adj1)
-		#print("new1 = ", new1)
+		print("new1 = ", new1)
 		#print("new1.size()=", new1.size())
 		new2 = self.self_attention(x2, adj2)
-		#print("new2 = ", new2)
+		print("new2 = ", new2)
 		#print("new2.size()=", new2.size())
-		new_fea = torch.cat((new1, new2)).view(1, -1)
-		print('new_fea.size:',new_fea.size())
+		new_fea = torch.cat((new1, new2)).view(1, -1).cuda(1)
+		print('new_fea:', new_fea)
 		x = self.classfier(new_fea)
-		print("x.classfier.size():", x.size())
+		print("x.classfier:", x)
 		x = self.softmax(x)
-		print("x.size()", x.size())
+		print("x", x)
 		return x
 
 	def self_attention(self, x, adj):
-		print("x.size = ", x.size())
-		print("adj.size = ", adj.size())
+		print("adj = ", adj)
 		new = []
 		for i in range(len(adj[0])):  # 0 - n
 			if i%1000 == 0:
 				print('i=', i)
-			tmp = torch.zeros(1, 64).float().cuda(1)  # 1*n
+			tmp = torch.zeros(1, 64).float().cuda()  # 1*n
+			print('tmp = ', tmp)
 			degree1 = adj.sum(dim=1)  # 1*n
+			print('degree = ', degree1)
 			for j in range(len(adj[0])):
 				if adj[i][j] == 1:
 					# print(tmp.size())
@@ -61,6 +64,6 @@ class GraphClassifier(nn.Module):
 			tmp /= degree1[i] * 1.0
 			tmp += x[i]
 			new.append(tmp)
-		new = torch.cat(tuple(new), 0)
+		new = torch.cat(tuple(new), 0).cuda()
 		print("self_attention finished")
 		return new
