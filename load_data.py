@@ -5,7 +5,7 @@ import networkx as nx
 import numpy as np
 from torch.utils.data import DataLoader
 from Entity import GraphDataset
-
+import torch.nn.functional as F
 
 # 上采样部分代码
 def get_max_nodenum(my_graphs):
@@ -133,10 +133,10 @@ def init_data(datadir, dataname):
 	count = 0
 	print("total graph number: ", len(graphs))
 	for graph in graphs:
-		# if count > 5:
-		# 	break
-		# else:
-		# 	count += 1
+		if count > 5:
+			break
+		else:
+			count += 1
 		my_graph = My_graph(graph, graph.graph['label'])
 		my_graphs.append(my_graph)
 	maxn1, maxn2 = get_max_nodenum(my_graphs)
@@ -157,8 +157,8 @@ def load_to_dataset(my_graphs):
 		graph.cal_lap(max_node_num1, max_node_num2)
 		lap_mats1.append(graph.nor_lap_mat1)
 		lap_mats2.append(graph.nor_lap_mat2)
-		adjs1.append(graph.adj1)
-		adjs2.append(graph.adj2)
+		adjs1.append(F.pad(graph.adj1,0,max_node_num1-len(graph.adj1[0]),0,max_node_num1-len(graph.adj1[0])))
+		adjs2.append(F.pad(graph.adj2,0,max_node_num2-len(graph.adj2[0]),0,max_node_num2-len(graph.adj2[0])))
 		labels.append(graph.label)
 	data = DataLoader(dataset=GraphDataset(lap_mats1, lap_mats2, adjs1, adjs2, labels), batch_size=1, shuffle=True)
 	return data

@@ -30,8 +30,8 @@ class GraphClassifier(nn.Module):
 	def forward(self, x1, x2, adj1, adj2):
 		x1 = self.layer1(x1)
 		x2 = self.layer2(x2)
-		new1 = self.self_attention(x1,adj1)
-		print("new1 = ",new1)
+		new1 = self.self_attention(x1, adj1)
+		print("new1 = ", new1)
 		print("new1.size()=", new1.size())
 		new2 = self.self_attention(x2, adj2)
 		print("new2 = ", new2)
@@ -43,13 +43,15 @@ class GraphClassifier(nn.Module):
 		return x
 
 	def self_attention(self, x, adj):
+		print("x.size = ", x.size())
+		print("adj.size = ", adj.size())
 		new = []
 		for i in range(len(adj[0])):  # 0 - n
 			tmp = torch.zeros(1, 64).float().cuda()  # 1*n
 			degree1 = adj.sum(dim=1)  # 1*n
 			for j in range(len(adj[0])):
 				if adj[i][j] == 1:
-					print(tmp.size())
+					# print(tmp.size())
 					# print("---", self.alpha1[i][j].size(), self.W.size(), x[j].size())
 					tmp += self.alpha1[i][j] * self.W * x[j]
 			tmp /= degree1[i] * 1.0

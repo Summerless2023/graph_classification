@@ -48,7 +48,12 @@ model = Encoder(100)
 # print((z[1][1] * w * y)/1)
 import numpy as np
 
-x = np.empty([3,2], dtype = int)
-x[0][0] = 1
-x[1][1] = 1
-print(np.sum(x==1))
+#x = np.empty([3,2], dtype = int)
+x = torch.Tensor([[1, 2], [3, 4], [5, 6]])
+print(x)
+
+import torch.nn.functional as F
+y = F.pad(x,(0,0,0,0),value=0)
+print(y)
+
+
