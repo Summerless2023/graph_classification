@@ -30,11 +30,8 @@ if __name__ == '__main__':
 			input1, input2, adj1, adj2, label = tmp
 			del tmp
 			output = model.forward(input1[0], input2[0], adj1[0], adj2[0])
-			index, output = max(output)
-			print('label = ', label)
-			print('label.size() = ', label)
-			print('index', index)
-			print('index.size() = ', index.size())
+			print('label = ', label[0])
+			print('label.size() = ', label[0].size())
 			print('output:', output)
 			print('output.size() = ', output.size())
 			loss = criterion(output, label)

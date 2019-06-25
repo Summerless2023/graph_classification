@@ -37,7 +37,7 @@ class GraphDataset(Dataset):
 
 	def __getitem__(self, index):
 		label = self.labels[index]
-		tmp_label = np.zeros((1, 1), dtype=np.int)
+		tmp_label = np.zeros(1, dtype=np.int)
 		tmp_label[0] = label
 		return (torch.from_numpy(self.lap_mats1[index]).float().cuda(),
 		        torch.from_numpy(self.lap_mats2[index]).float().cuda(),

@@ -1,8 +1,5 @@
 import torch
 import torch.nn as nn
-import os
-
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 
 class Encoder(nn.Module):
@@ -42,7 +39,7 @@ class GraphClassifier(nn.Module):
 		# print("new2 = ", new2)
 		# print("new2.size()=", new2.size())
 		new_fea = torch.cat((new1, new2)).view(1, -1).cuda()
-		# print('new_fea:', new_fea)
+		print('new_fea:', new_fea)
 		x = self.classfier(new_fea)
 		# print("x.classfier:", x)
 		x = self.softmax(x)
