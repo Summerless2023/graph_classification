@@ -167,6 +167,5 @@ def load_to_dataset(my_graphs):
 			np.pad(graph.adj2, ((0, max_node_num2 - len(graph.adj2[0])), (0, max_node_num2 - len(graph.adj2[0]))),
 			       'constant', constant_values=((0, 0), (0, 0))))
 		labels.append(graph.label)
-	data = DataLoader(dataset=GraphDataset(lap_mats1, lap_mats2, adjs1, adjs2, labels), batch_size=1, shuffle=True,
-	                  num_workers=1)
+	data = DataLoader(dataset=GraphDataset(lap_mats1, lap_mats2, adjs1, adjs2, labels), batch_size=1, shuffle=True)
 	return data
