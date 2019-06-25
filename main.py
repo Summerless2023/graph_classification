@@ -37,7 +37,7 @@ if __name__ == '__main__':
 			print('index.size() = ', index.size())
 			print('output:', output)
 			print('output.size() = ', output.size())
-			loss = criterion(index, label)
+			loss = criterion(output, label)
 			print_loss = loss.data.item()
 			optimizer.zero_grad()
 			loss.backward()

@@ -55,5 +55,25 @@ import numpy as np
 # import torch.nn.functional as F
 # y = F.pad(x,(0,0,0,0),value=0)
 # print(y)
-A = np.arange(95,99).reshape(2,2)
-print(A)
+# A = np.arange(95,99).reshape(2,2)
+# print(A)
+
+import torch
+import torch.nn as nn
+
+loss = nn.CrossEntropyLoss()
+
+# input, NxC=2x3
+
+input = torch.randn(2, 3, requires_grad=True)
+print(input.size())
+print(input)
+
+# target, N
+
+target = torch.empty(2, dtype=torch.long).random_(3)
+print(target.size())
+print(target)
+output = loss(input, target)
+print(output)
+output.backward()
