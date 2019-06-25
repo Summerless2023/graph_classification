@@ -31,3 +31,4 @@ if __name__ == '__main__':
 			del tmp
 			output = model.forward(input1[0], input2[0], adj1[0], adj2[0])
 			print('output:',output)
+			print('output.size() = ', output.size())

@@ -1,7 +1,9 @@
 import math
 import networkx as nx
 import numpy as np
-import torch
+import os
+
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 
 def handle_graph(graph, max_node_num):

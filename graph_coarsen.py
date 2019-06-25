@@ -1,7 +1,9 @@
 import networkx as nx
 import torch
 from torch_cluster import graclus_cluster
+import os
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 def get_coarsen_graphs(graph):
 	graphs = []

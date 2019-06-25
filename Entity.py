@@ -4,7 +4,9 @@ from torch.utils.data import Dataset
 from graph_coarsen import coarsen
 from utils import handle_graph
 from utils import reshape_graph
+import os
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 class My_graph(object):
 	def __init__(self, networkx_work, label):

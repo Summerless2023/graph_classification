@@ -1,5 +1,8 @@
 import torch
 import torch.nn as nn
+import os
+
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 
 class Encoder(nn.Module):
@@ -47,7 +50,7 @@ class GraphClassifier(nn.Module):
 		return x
 
 	def self_attention(self, x, adj):
-		print("adj = ", adj)
+		# print("adj = ", adj)
 		new = []
 		for i in range(len(adj[0])):  # 0 - n
 			if i%1000 == 0:

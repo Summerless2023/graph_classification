@@ -6,7 +6,9 @@ import numpy as np
 from torch.utils.data import DataLoader
 from Entity import GraphDataset
 import torch.nn.functional as F
+import os
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 # 上采样部分代码
 def get_max_nodenum(my_graphs):
