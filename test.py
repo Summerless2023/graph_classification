@@ -66,6 +66,11 @@ loss = nn.CrossEntropyLoss()
 # input, NxC=2x3
 
 input = torch.randn(2, 3, requires_grad=True)
+
+print(input[0].size())
+
+
+
 print(input.size())
 print(input)
 
