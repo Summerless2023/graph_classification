@@ -41,11 +41,13 @@ class GraphClassifier(nn.Module):
 		# print("new2 = ", new2)
 		# print("new2.size()=", new2.size())
 		new_fea = torch.cat((new1, new2)).view(1, -1).cuda()
-		# print('new_fea:', new_fea)
+		print('new_fea:', new_fea)
+		print('new_fea.size(): ', new_fea.size())
 		x = self.classfier(new_fea).cuda()
 		print("x.classfier:", x)
+		print("x.classfier.size(): ", x.size())
 		x = self.softmax(x).cuda()
-		print("softmax", x)
+		print("softmax.size(): ", x.size())
 		return x
 
 	def self_attention(self, x, adj):

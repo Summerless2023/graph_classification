@@ -12,6 +12,7 @@ dataname = "DD"
 batch_size = 1
 learning_rate = 0.01
 num_epoches = 5
+class_num = 2
 
 if __name__ == '__main__':
 	my_graphs, max_node_num1, max_node_num2 = init_data(datadir, dataname)
@@ -30,12 +31,18 @@ if __name__ == '__main__':
 			input1, input2, adj1, adj2, label = tmp
 			del tmp
 			output = model.forward(input1[0], input2[0], adj1[0], adj2[0]).cuda()
-			print('label = ', label[0])
-			print('label.size() = ', label[0].size())
-			print('output:', output[0])
-			print('output.size() = ', output[0].size())
-			_, pre = torch.max(output, dim=0)
-			loss = criterion(_, label[0])
+			print('label[0] = ', label[0])
+			print('label[0].size() = ', label[0].size())
+			print('label = ', label)
+			print('label.size() = ', label.size())
+			label = torch.zeros(batch_size, class_num).scatter_(1, label, 1)
+			print('label[0] = ', label[0])
+			print('label[0].size() = ', label[0].size())
+			print('label = ', label)
+			print('label.size() = ', label.size())
+			print('output:', output)
+			print('output.size() = ', output.size())
+			loss = criterion(output, label[0])
 			print_loss = loss.data.item()
 			print("loss : ", print_loss)
 			optimizer.zero_grad()
