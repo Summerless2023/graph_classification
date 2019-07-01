@@ -6,12 +6,12 @@ from load_data import load_to_dataset
 from my_model import GraphClassifier
 
 # 相关配置
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 datadir = "./data"
 dataname = "DD"
 batch_size = 1
 learning_rate = 0.01
-num_epoches = 200
+num_epoches = 5
 
 if __name__ == '__main__':
 	my_graphs, max_node_num1, max_node_num2 = init_data(datadir, dataname)
@@ -20,7 +20,7 @@ if __name__ == '__main__':
 	model = GraphClassifier(max_node_num1, max_node_num2)
 	model = model.cuda()
 	print('model:', model)
-	criterion = nn.CrossEntropyLoss()
+	criterion = nn.MSELoss()
 	optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 	for epoch in range(num_epoches):
 		print("第%d轮训练" % epoch)
@@ -29,15 +29,15 @@ if __name__ == '__main__':
 			print(i)
 			input1, input2, adj1, adj2, label = tmp
 			del tmp
-			output = model.forward(input1[0], input2[0], adj1[0], adj2[0])
+			output = model.forward(input1[0], input2[0], adj1[0], adj2[0]).cuda()
 			print('label = ', label[0])
 			print('label.size() = ', label[0].size())
 			print('output:', output[0])
 			print('output.size() = ', output[0].size())
+			_, pre = torch.max(output)
 			loss = criterion(output[0], label[0])
 			print_loss = loss.data.item()
+			print("loss : ", print_loss)
 			optimizer.zero_grad()
 			loss.backward()
 			optimizer.step()
-			if i % 50 == 0:
-				print('i: {}, loss: {:.4}'.format(i, loss.data.item()))

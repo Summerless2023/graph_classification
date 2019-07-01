@@ -43,7 +43,7 @@ class GraphDataset(Dataset):
 		        torch.from_numpy(self.lap_mats2[index]).float().cuda(),
 		        torch.from_numpy(self.adjs1[index]).cuda(),
 		        torch.from_numpy(self.adjs2[index]).cuda(),
-		        torch.from_numpy(tmp_label).cuda())
+		        torch.from_numpy(tmp_label).float().cuda())
 
 	def __len__(self):
 		return len(self.lap_mats1)
