@@ -11,7 +11,7 @@ datadir = "./data"
 dataname = "DD"
 batch_size = 1
 learning_rate = 0.01
-num_epoches = 5
+num_epoches = 1
 class_num = 2
 
 if __name__ == '__main__':
