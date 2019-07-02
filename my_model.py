@@ -27,7 +27,7 @@ class GraphClassifier(nn.Module):
 		self.alpha1 = nn.Parameter(torch.rand(node_num1, node_num1)).cuda()
 		self.alpha2 = nn.Parameter(torch.rand(node_num2, node_num2)).cuda()
 		self.classfier = nn.Linear((node_num1 + node_num2) * 64, 2).cuda()
-		self.softmax = nn.Softmax(dim=0).cuda()
+		self.softmax = nn.Softmax(dim=1).cuda()
 
 	def forward(self, x1, x2, adj1, adj2):
 		x1 = self.layer1(x1).cuda()
@@ -47,6 +47,7 @@ class GraphClassifier(nn.Module):
 		print("x.classfier:", x)
 		print("x.classfier.size(): ", x.size())
 		x = self.softmax(x).cuda()
+		print("softmax: ", x)
 		print("softmax.size(): ", x.size())
 		return x
 

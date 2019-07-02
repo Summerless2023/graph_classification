@@ -65,8 +65,10 @@ loss = nn.CrossEntropyLoss()
 
 # input, NxC=2x3
 
-input = torch.randn(2, requires_grad=True)
+input = torch.randn((1, 2), requires_grad=True)
+print(input.size())
 print(input)
-a, b = torch.max(input, dim=0)
-print(a)
-print(b)
+softmax = nn.Softmax(dim=1)
+output = softmax(input)
+print(output.size())
+print(output)
