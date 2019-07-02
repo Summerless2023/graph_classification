@@ -31,17 +31,21 @@ if __name__ == '__main__':
 			input1, input2, adj1, adj2, label = tmp
 			del tmp
 			output = model.forward(input1[0], input2[0], adj1[0], adj2[0]).cuda()
+
 			print('label[0] = ', label[0])
 			print('label[0].size() = ', label[0].size())
 			print('label = ', label)
 			print('label.size() = ', label.size())
+
 			cu_label = torch.zeros(batch_size, class_num).scatter_(1, label, 1).cuda()
+
 			print('label[0] = ', cu_label[0])
 			print('label[0].size() = ', cu_label[0].size())
 			print('label = ', cu_label)
 			print('label.size() = ', cu_label.size())
 			print('output:', output)
 			print('output.size() = ', output.size())
+
 			loss = criterion(output, cu_label)
 			print_loss = loss.data.item()
 			print("loss : ", print_loss)
