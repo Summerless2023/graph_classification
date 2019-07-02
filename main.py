@@ -42,7 +42,6 @@ if __name__ == '__main__':
 			# print('label.size() = ', cu_label.size())
 			# print('output:', output)
 			# print('output.size() = ', output.size())
-
 			loss = criterion(output, cu_label)
 			print_loss = loss.data.item()
 			print("loss : ", print_loss)
