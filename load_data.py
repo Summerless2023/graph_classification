@@ -146,7 +146,7 @@ def init_data(datadir, dataname):
 	return my_graphs, maxn1, maxn2
 
 
-def load_to_dataset(my_graphs):
+def load_to_dataset(my_graphs, index):
 	max_node_num1, max_node_num2 = get_max_nodenum(my_graphs)
 	lap_mats1 = []
 	lap_mats2 = []
@@ -167,5 +167,10 @@ def load_to_dataset(my_graphs):
 			np.pad(graph.adj2, ((0, max_node_num2 - len(graph.adj2[0])), (0, max_node_num2 - len(graph.adj2[0]))),
 			       'constant', constant_values=((0, 0), (0, 0))))
 		labels.append(graph.label)
-	data = DataLoader(dataset=GraphDataset(lap_mats1, lap_mats2, adjs1, adjs2, labels), batch_size=1, shuffle=True)
-	return data
+	train_data = DataLoader(
+		dataset=GraphDataset(lap_mats1[0:index], lap_mats2[0:index], adjs1[0:index], adjs2[0:index], labels[0:index]),
+		batch_size=1, shuffle=True)
+	test_data = DataLoader(
+		dataset=GraphDataset(lap_mats1[index:], lap_mats2[index:], adjs1[index:], adjs2[index:], labels[index:]),
+		batch_size=1, shuffle=True)
+	return train_data, test_data
