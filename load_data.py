@@ -136,7 +136,7 @@ def init_data(datadir, dataname):
 	count = 0
 	print("total graph number: ", len(graphs))
 	for graph in graphs:
-		if count > 1000:
+		if count > 4:
 			break
 		else:
 			count += 1

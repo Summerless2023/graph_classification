@@ -2,15 +2,16 @@ import math
 import networkx as nx
 import numpy as np
 import os
-
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
-
+import torch
 
 def handle_graph(graph, max_node_num):
 	node_num = graph.number_of_nodes()
 	adj_mat = np.zeros([node_num, node_num], dtype=np.int)
 	degree_mat = np.zeros([node_num, node_num], dtype=np.int)
 	nor_lap_mat = np.zeros([max_node_num, max_node_num], dtype=np.float)
+	# adj_mat = torch.zeros([node_num, node_num]).int().cuda()
+	# degree_mat = torch.zeros([node_num, node_num]).int().cuda()
+	# nor_lap_mat = torch.zeros([max_node_num, max_node_num]).int().cuda()
 
 	# 计算图的邻接矩阵
 	for s, t in graph.edges():
