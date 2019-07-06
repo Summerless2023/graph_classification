@@ -13,7 +13,7 @@ batch_size = 1
 learning_rate = 0.01
 num_epoches = 2
 class_num = 2
-index = 2
+index = 700
 
 if __name__ == '__main__':
 	my_graphs, max_node_num1, max_node_num2 = init_data(datadir, dataname)
@@ -34,6 +34,8 @@ if __name__ == '__main__':
 			del tmp
 			output = model.forward(input1[0], input2[0], adj1[0], adj2[0]).cuda()
 			cu_label = torch.zeros(batch_size, class_num).scatter_(1, label, 1).cuda()
+			print("*" * 40)
+			print("label = ", label)
 			print('output.size = ', output.size())
 			print('output = ', output)
 			print('cu_label.size = ', cu_label.size())
