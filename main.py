@@ -11,9 +11,9 @@ datadir = "./data"
 dataname = "DD"
 batch_size = 1
 learning_rate = 0.01
-num_epoches = 2
+num_epoches = 1
 class_num = 2
-index = 700
+index = 15
 
 if __name__ == '__main__':
 	my_graphs, max_node_num1, max_node_num2 = init_data(datadir, dataname)
