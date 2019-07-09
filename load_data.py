@@ -171,20 +171,16 @@ def load_to_dataset(my_graphs, index):
 			np.pad(graph.adj2, ((0, max_node_num2 - len(graph.adj2[0])), (0, max_node_num2 - len(graph.adj2[0]))),
 			       'constant', constant_values=((0, 0), (0, 0))))
 		labels.append(graph.label)
-
-	train_data = DataLoader(
-		dataset=GraphDataset(lap_mats1[0:index], lap_mats2[0:index], adjs1[0:index], adjs2[0:index], labels[0:index]),
+	data = DataLoader(
+		dataset=GraphDataset(lap_mats1, lap_mats2, adjs1, adjs2, labels),
 		batch_size=1, shuffle=True)
-	print('loaded_to_dataset_1\n')
-	for i, tmp in enumerate(train_data):
-		input1, input2, adj1, adj2, label = tmp
-		print(label)
 
-	test_data = DataLoader(
-		dataset=GraphDataset(lap_mats1[index:], lap_mats2[index:], adjs1[index:], adjs2[index:], labels[index:]),
-		batch_size=1, shuffle=True)
-	print('loaded_to_dataset_2\n')
-	for i, tmp in enumerate(test_data):
-		input1, input2, adj1, adj2, label = tmp
-		print(label)
-	return train_data, test_data
+	# train_data = DataLoader(
+	# 	dataset=GraphDataset(lap_mats1[0:index], lap_mats2[0:index], adjs1[0:index], adjs2[0:index], labels[0:index]),
+	# 	batch_size=1, shuffle=True)
+	#
+	# test_data = DataLoader(
+	# 	dataset=GraphDataset(lap_mats1[index:], lap_mats2[index:], adjs1[index:], adjs2[index:], labels[index:]),
+	# 	batch_size=1, shuffle=True)
+	# return train_data, test_data
+	return data

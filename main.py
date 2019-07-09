@@ -17,7 +17,7 @@ index = 10
 
 if __name__ == '__main__':
 	my_graphs, max_node_num1, max_node_num2 = init_data(datadir, dataname)
-	train_data, test_data = load_to_dataset(my_graphs, index)
+	data = load_to_dataset(my_graphs, index)
 	print("数据处理完成")
 	model = GraphClassifier(max_node_num1, max_node_num2)
 	model = model.cuda()
@@ -27,7 +27,9 @@ if __name__ == '__main__':
 	for epoch in range(num_epoches):
 		print("第%d轮训练" % epoch)
 
-		for i, tmp in enumerate(train_data):
+		for i, tmp in enumerate(data):
+			if i > index:
+				break
 			torch.cuda.empty_cache()
 			print(i)
 			input1, input2, adj1, adj2, label = tmp
@@ -48,7 +50,9 @@ if __name__ == '__main__':
 				loss.backward()
 				optimizer.step()
 		acc_num = 0
-		for i, tmp in enumerate(test_data):
+		for i, tmp in enumerate(data):
+			if i < index:
+				continue
 			input1, input2, adj1, adj2, label = tmp
 			output = model.forward(input1[0], input2[0], adj1[0], adj2[0]).cuda()
 			print('output = ', output)
@@ -64,4 +68,4 @@ if __name__ == '__main__':
 			label = label.cuda()
 			if pre[0] == label[0]:
 				acc_num += 1
-		print("accuracy : ", acc_num, "of ", len(test_data))
+		print("accuracy : ", acc_num, "of ", len(data) - index)
