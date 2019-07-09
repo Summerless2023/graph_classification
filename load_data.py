@@ -143,7 +143,7 @@ def init_data(datadir, dataname):
 		my_graph = My_graph(graph, graph.graph['label'])
 		my_graphs.append(my_graph)
 	for i in range(len(graphs) - 1, len(graphs) - 21, -1):
-		my_graph = My_graph(graph, graph.graph['label'])
+		my_graph = My_graph(graphs[i], graphs[i].graph['label'])
 		my_graphs.append(my_graph)
 	maxn1, maxn2 = get_max_nodenum(my_graphs)
 	return my_graphs, maxn1, maxn2

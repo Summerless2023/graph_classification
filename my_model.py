@@ -55,21 +55,16 @@ class GraphClassifier(nn.Module):
 		# print("adj = ", adj)
 		new = []
 		for i in range(len(adj[0])):  # 0 - n
-			if i % 1000 == 0:
-				print('i=', i)
 			tmp = torch.zeros(1, 64).float().cuda()  # 1*n
 			# print('tmp = ', tmp)
 			degree1 = adj.sum(dim=1).cuda()  # 1*n
 			# print('degree = ', degree1)
-			for j in range(len(adj[0])):
-				if adj[i][j] == 1:
-					# print(tmp.size())
-					# print("---", self.alpha1[i][j].size(), self.W.size(), x[j].size())
-					tmp += self.alpha1[i][j] * self.W * x[j]
 			if degree1[i] != 0:
+				for j in range(len(adj[0])):
+					if adj[i][j] == 1:
+						tmp += self.alpha1[i][j] * self.W * x[j]
 				tmp /= degree1[i] * 1.0
-
-			tmp += x[i]
+				tmp += x[i]
 			new.append(tmp)
 		new = torch.cat(tuple(new), 0).cuda()
 		# print("self_attention finished")
