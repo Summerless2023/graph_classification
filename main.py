@@ -13,7 +13,7 @@ batch_size = 1
 learning_rate = 0.01
 num_epoches = 1
 class_num = 2
-index = 30
+index = 10
 
 if __name__ == '__main__':
 	my_graphs, max_node_num1, max_node_num2 = init_data(datadir, dataname)
@@ -51,7 +51,15 @@ if __name__ == '__main__':
 		for i, tmp in enumerate(test_data):
 			input1, input2, adj1, adj2, label = tmp
 			output = model.forward(input1[0], input2[0], adj1[0], adj2[0]).cuda()
+			print('output = ', output)
+			print('output.size = ', output.size())
+			print('label = ', label)
+			print('label.size = ', label.size())
 			_, pre = torch.max(output, dim=1)
+			print('_ =', _)
+			print('_.size = ', _.size())
+			print('pre = ', pre)
+			print('pre.size = ', pre.size())
 			pre = pre.cuda()
 			label = label.cuda()
 			if pre[0] == label[0]:

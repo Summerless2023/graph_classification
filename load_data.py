@@ -10,6 +10,7 @@ import os
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
+
 # 上采样部分代码
 def get_max_nodenum(my_graphs):
 	max_node_num1 = 0
@@ -136,13 +137,13 @@ def init_data(datadir, dataname):
 	count = 0
 	print("total graph number: ", len(graphs))
 	for graph in graphs:
-		if count > 20:
+		if count > 10:
 			break
 		else:
 			count += 1
 		my_graph = My_graph(graph, graph.graph['label'])
 		my_graphs.append(my_graph)
-	for i in range(len(graphs) - 1, len(graphs) - 21, -1):
+	for i in range(len(graphs) - 1, len(graphs) - 10, -1):
 		my_graph = My_graph(graphs[i], graphs[i].graph['label'])
 		my_graphs.append(my_graph)
 	maxn1, maxn2 = get_max_nodenum(my_graphs)
@@ -171,15 +172,10 @@ def load_to_dataset(my_graphs, index):
 			       'constant', constant_values=((0, 0), (0, 0))))
 		labels.append(graph.label)
 
-	print("load_to_dataset1\n")
-	for i in labels:
-		print(i)
-
-
 	train_data = DataLoader(
 		dataset=GraphDataset(lap_mats1[0:index], lap_mats2[0:index], adjs1[0:index], adjs2[0:index], labels[0:index]),
 		batch_size=1, shuffle=True)
-	print('load_to_dataset_2\n')
+	print('loaded_to_dataset_1\n')
 	for i, tmp in enumerate(train_data):
 		input1, input2, adj1, adj2, label = tmp
 		print(label)
@@ -187,4 +183,8 @@ def load_to_dataset(my_graphs, index):
 	test_data = DataLoader(
 		dataset=GraphDataset(lap_mats1[index:], lap_mats2[index:], adjs1[index:], adjs2[index:], labels[index:]),
 		batch_size=1, shuffle=True)
+	print('loaded_to_dataset_2\n')
+	for i, tmp in enumerate(test_data):
+		input1, input2, adj1, adj2, label = tmp
+		print(label)
 	return train_data, test_data
