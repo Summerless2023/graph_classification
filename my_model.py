@@ -52,13 +52,10 @@ class GraphClassifier(nn.Module):
 		return x
 
 	def self_attention(self, x, adj):
-		# print("adj = ", adj)
 		new = []
 		for i in range(len(adj[0])):  # 0 - n
 			tmp = torch.zeros(1, 64).float().cuda()  # 1*n
-			# print('tmp = ', tmp)
 			degree1 = adj.sum(dim=1).cuda()  # 1*n
-			# print('degree = ', degree1)
 			if degree1[i] != 0:
 				for j in range(len(adj[0])):
 					if adj[i][j] == 1:
@@ -67,5 +64,4 @@ class GraphClassifier(nn.Module):
 				tmp += x[i]
 			new.append(tmp)
 		new = torch.cat(tuple(new), 0).cuda()
-		# print("self_attention finished")
 		return new

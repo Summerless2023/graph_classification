@@ -103,13 +103,7 @@ for data in train_loader:
 	else:
 		img = Variable(img)
 		label = Variable(label)
-	print("*" * 40)
-	# print(img.size())
-	print(label.size())
-	print(label)
 	out = model(img)
-	print(out.size())
-	print(out)
 	loss = criterion(out, label)
 	print_loss = loss.data.item()
 

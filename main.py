@@ -43,9 +43,10 @@ if __name__ == '__main__':
 			loss = criterion(output, cu_label)
 			print_loss = loss.data.item()
 			print("loss : ", print_loss)
-			optimizer.zero_grad()
-			loss.backward()
-			optimizer.step()
+			if i % 5 == 0:
+				optimizer.zero_grad()
+				loss.backward()
+				optimizer.step()
 		acc_num = 0
 		for i, tmp in enumerate(test_data):
 			input1, input2, adj1, adj2, label = tmp
