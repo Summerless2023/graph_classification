@@ -2,7 +2,6 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 from graph_coarsen import coarsen
-from utils import handle_graph
 from utils import reshape_graph
 import os
 
@@ -13,19 +12,6 @@ class My_graph(object):
 		self.graph1 = networkx_work
 		self.graph2 = reshape_graph(coarsen(self.graph1))
 		self.label = label
-		self.max_node_number1 = 1
-		self.max_node_number2 = 1
-		self.nor_lap_mat1 = None
-		self.nor_lap_mat2 = None
-		self.adj1 = None
-		self.adj2 = None
-
-	def cal_lap(self, n1, n2):
-		self.max_node_number1 = n1
-		self.max_node_number2 = n2
-		self.nor_lap_mat1, self.adj1 = handle_graph(self.graph1, self.max_node_number1)
-		self.nor_lap_mat2, self.adj2 = handle_graph(self.graph2, self.max_node_number2)
-
 
 class GraphDataset(Dataset):
 	def __init__(self, laps1, laps2, adjs1, adjs2, labels):
