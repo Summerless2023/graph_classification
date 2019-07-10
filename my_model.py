@@ -31,24 +31,12 @@ class GraphClassifier(nn.Module):
 
 	def forward(self, x1, x2, adj1, adj2):
 		x1 = self.layer1(x1).cuda()
-		# print("x1 = ", x1)
 		x2 = self.layer2(x2).cuda()
-		# print("x2 = ", x2)
 		new1 = self.self_attention(x1, adj1).cuda()
-		# print("new1 = ", new1)
-		# print("new1.size()=", new1.size())
 		new2 = self.self_attention(x2, adj2).cuda()
-		# print("new2 = ", new2)
-		# print("new2.size()=", new2.size())
 		new_fea = torch.cat((new1, new2)).view(1, -1).cuda()
-		# print('new_fea:', new_fea)
-		# print('new_fea.size(): ', new_fea.size())
 		x = self.classfier(new_fea).cuda()
-		# print("x.classfier:", x)
-		# print("x.classfier.size(): ", x.size())
 		x = self.softmax(x).cuda()
-		# print("softmax: ", x)
-		# print("softmax.size(): ", x.size())
 		return x
 
 	def self_attention(self, x, adj):

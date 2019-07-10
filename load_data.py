@@ -137,10 +137,6 @@ def init_data(datadir, dataname):
 	count = 0
 	print("total graph number: ", len(graphs))
 	for graph in graphs:
-		if count > 10:
-			break
-		else:
-			count += 1
 		my_graph = My_graph(graph, graph.graph['label'])
 		my_graphs.append(my_graph)
 	for i in range(len(graphs) - 1, len(graphs) - 10, -1):
