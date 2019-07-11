@@ -1,5 +1,6 @@
 import os
 import torch
+import random
 import numpy as np
 from torch import nn, optim
 from load_data import init_data
@@ -18,6 +19,7 @@ index = int(1178 * 0.7)
 # index = 3
 if __name__ == '__main__':
 	my_graphs, max_node_num1, max_node_num2 = init_data(datadir, dataname)
+	random.shuffle(my_graphs)
 	print("数据处理完成")
 	model = GraphClassifier(max_node_num1, max_node_num2)
 	model = model.cuda()
