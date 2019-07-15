@@ -63,9 +63,9 @@ if __name__ == '__main__':
 			# tmp_label = torch.from_numpy(tmp)
 			# one_hot = torch.zeros(batch_size, class_num).scatter_(1, tmp_label, 1).cuda()
 			# loss = criterion(output, one_hot)
-			torch_label = torch.from_numpy(np.zeros(1))
-			torch_label[0] = label
-			loss = crossentropy(output, torch_label)
+			tmp = np.zeros(1, dtype=np.int)
+			tmp[0] = label
+			loss = crossentropy(output, torch.from_numpy(tmp).cuda())
 
 
 			print_loss = loss.data.item()

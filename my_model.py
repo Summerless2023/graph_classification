@@ -8,14 +8,16 @@ class Encoder(nn.Module):
 		self.fc1 = nn.Linear(node_num, 256)
 		self.fc2 = nn.Linear(256, 128)
 		self.fc3 = nn.Linear(128, 64)
-		# self.relu = nn.ReLU(True)
-		self.sigmod = nn.Sigmoid()
+		self.relu = nn.ReLU(True)
+
+	# self.sigmod = nn.Sigmoid()
 
 	def forward(self, x):
 		x = self.fc1(x).cuda()
 		x = self.fc2(x).cuda()
 		x = self.fc3(x).cuda()
-		x = self.sigmod(x).cuda()
+		# x = self.sigmod(x).cuda()
+		x = self.relu(x)
 		return x
 
 
@@ -40,8 +42,8 @@ class GraphClassifier(nn.Module):
 		new2 = self.self_attention(x2, adj2).cuda()
 		new_fea = torch.cat((new1, new2)).view(1, -1).cuda()
 		x = self.classfier(new_fea).cuda()
-		print("x.size1 = ", x.size())
-		print("x = ", x)
+		# print("x.size1 = ", x.size())
+		#print("x = ", x)
 		# x = self.softmax(x).cuda()
 		# print("x.size2 = ", x.size())
 		# print("x = ", x)
