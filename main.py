@@ -33,7 +33,8 @@ if __name__ == '__main__':
 	model.apply(weights_init)
 	model = model.cuda()
 	print('model:', model)
-	criterion = nn.MSELoss()
+	# criterion = nn.MSELoss()
+	crossentropy = torch.nn.CrossEntropyLoss()
 	optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 	print('开始训练')
 	for epoch in range(num_epoches):
@@ -56,13 +57,17 @@ if __name__ == '__main__':
 			              'constant', constant_values=((0, 0), (0, 0)))
 			adj2 = torch.from_numpy(adj2).cuda()
 			# print('adj2.size = ', adj2.size())
-
-			tmp = np.zeros((1, 1), dtype=np.int)
-			tmp[0][0] = label
-			tmp_label = torch.from_numpy(tmp)
 			output = model.forward(input1, input2, adj1, adj2).cuda()
-			one_hot = torch.zeros(batch_size, class_num).scatter_(1, tmp_label, 1).cuda()
-			loss = criterion(output, one_hot)
+			# tmp = np.zeros((1, 1), dtype=np.int)
+			# tmp[0][0] = label
+			# tmp_label = torch.from_numpy(tmp)
+			# one_hot = torch.zeros(batch_size, class_num).scatter_(1, tmp_label, 1).cuda()
+			# loss = criterion(output, one_hot)
+			torch_label = np.zeros(1)
+			torch_label[0] = label
+			loss = crossentropy(output, label)
+
+
 			print_loss = loss.data.item()
 			print(print_loss)
 			if i % 12 == 0:

@@ -13,9 +13,10 @@ import torch.nn as nn
 
 loss = nn.CrossEntropyLoss()
 # input, NxC=2x3
-input = torch.randn(1, 3, requires_grad=True)
+input = torch.randn(1, 2, requires_grad=True)
 # target, N
-target = torch.empty(3, dtype=torch.long).random_(3)
+target = torch.empty(1, dtype=torch.long)
+target[0] = 1
 print(input.size())
 print(input)
 print(target.size())
@@ -23,4 +24,4 @@ print(target)
 output = loss(input, target)
 output.backward()
 
-print(loss)
+print(output.data.item())

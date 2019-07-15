@@ -42,9 +42,9 @@ class GraphClassifier(nn.Module):
 		x = self.classfier(new_fea).cuda()
 		print("x.size1 = ", x.size())
 		print("x = ", x)
-		x = self.softmax(x).cuda()
-		print("x.size2 = ", x.size())
-		print("x = ", x)
+		# x = self.softmax(x).cuda()
+		# print("x.size2 = ", x.size())
+		# print("x = ", x)
 		return x
 
 	def self_attention(self, x, adj):
