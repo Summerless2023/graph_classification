@@ -25,11 +25,11 @@ class GraphClassifier(nn.Module):
 		self.layer1 = Encoder(node_num1).cuda()
 		self.layer2 = Encoder(node_num2).cuda()
 		self.W = nn.Parameter(torch.rand(1, 1), requires_grad=True).cuda()
-		nn.init.normal(self.W)
+		nn.init.normal_(self.W)
 		self.alpha1 = nn.Parameter(torch.rand(node_num1, node_num1), requires_grad=True).cuda()
-		nn.init.normal(self.alpha1)
+		nn.init.normal_(self.alpha1)
 		self.alpha2 = nn.Parameter(torch.rand(node_num2, node_num2), requires_grad=True).cuda()
-		nn.init.normal(self.alpha2)
+		nn.init.normal_(self.alpha2)
 		self.classfier = nn.Linear((node_num1 + node_num2) * 64, 2).cuda()
 		self.softmax = nn.Softmax(dim=1).cuda()
 
@@ -41,8 +41,10 @@ class GraphClassifier(nn.Module):
 		new_fea = torch.cat((new1, new2)).view(1, -1).cuda()
 		x = self.classfier(new_fea).cuda()
 		print("x.size1 = ", x.size())
+		print("x = ", x)
 		x = self.softmax(x).cuda()
 		print("x.size2 = ", x.size())
+		print("x = ", x)
 		return x
 
 	def self_attention(self, x, adj):
