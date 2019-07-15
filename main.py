@@ -6,22 +6,31 @@ from torch import nn, optim
 from load_data import init_data
 from my_model import GraphClassifier
 from utils import handle_graph
+import torch.nn.init as init
 
 # 相关配置
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 datadir = "./data"
 dataname = "DD"
 batch_size = 1
-learning_rate = 0.01
+learning_rate = 0.05
 num_epoches = 1
 class_num = 2
 index = int(1178 * 0.7)
 # index = 3
+
+def weights_init(m):
+	classname = m.__class__.__name__
+	if classname.find('Linear') != -1:
+		init.xavier_normal_(m.weight.data)
+		init.constant_(m.bias.data, 0.0)
+
 if __name__ == '__main__':
 	my_graphs, max_node_num1, max_node_num2 = init_data(datadir, dataname)
 	random.shuffle(my_graphs)
 	print("数据处理完成")
 	model = GraphClassifier(max_node_num1, max_node_num2)
+	model.apply(weights_init)
 	model = model.cuda()
 	print('model:', model)
 	criterion = nn.MSELoss()
@@ -56,7 +65,7 @@ if __name__ == '__main__':
 			loss = criterion(output, one_hot)
 			print_loss = loss.data.item()
 			print(print_loss)
-			if i % 5 == 0:
+			if i % 12 == 0:
 				optimizer.zero_grad()
 				loss.backward()
 				optimizer.step()
@@ -82,7 +91,7 @@ if __name__ == '__main__':
 			adj2 = np.pad(adj2, ((0, max_node_num2 - len(adj2[0])), (0, max_node_num2 - len(adj2[0]))),
 			              'constant', constant_values=((0, 0), (0, 0)))
 			adj2 = torch.from_numpy(adj2).cuda()
-			#print('adj2.size = ', adj2.size())
+			# print('adj2.size = ', adj2.size())
 
 			output = model.forward(input1, input2, adj1, adj2).cuda()
 			_, pre = torch.max(output, dim=1)
@@ -91,12 +100,6 @@ if __name__ == '__main__':
 			tmp_label = torch.from_numpy(tmp)
 			pre = pre.cuda()
 			tmp_label = tmp_label.cuda()
-			print("pre")
-			print(pre.size())
-			print(pre)
-			print("label")
-			print(tmp_label.size())
-			print(tmp_label)
 			if pre[0] == tmp_label[0][0]:
 				acc_num += 1
 		print("accuracy : ", acc_num, "of ", test_count)
