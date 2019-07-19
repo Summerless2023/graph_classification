@@ -19,21 +19,14 @@ class_num = 2
 index = int(1178 * 0.7)
 # index = 3
 
-def weights_init(m):
-	classname = m.__class__.__name__
-	if classname.find('Linear') != -1:
-		init.xavier_normal_(m.weight.data)
-		init.constant_(m.bias.data, 0.0)
 
 if __name__ == '__main__':
 	my_graphs, max_node_num1, max_node_num2 = init_data(datadir, dataname)
 	random.shuffle(my_graphs)
 	print("数据处理完成")
 	model = GraphClassifier(max_node_num1, max_node_num2)
-	model.apply(weights_init)
 	model = model.cuda()
 	print('model:', model)
-	# criterion = nn.MSELoss()
 	crossentropy = torch.nn.CrossEntropyLoss()
 	optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 	print('开始训练')
