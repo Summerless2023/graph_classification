@@ -61,10 +61,12 @@ if __name__ == '__main__':
 			loss = crossentropy(output, torch.from_numpy(tmp).cuda())
 			print_loss = loss.data.item()
 			print(print_loss)
+			loss.backward()
 			if i % batch_size == 0:
-				optimizer.zero_grad()
-				loss.backward()
+				# loss.backward()
 				optimizer.step()
+				optimizer.zero_grad()
+
 	print("训练结束")
 	acc_num = 0
 	test_count = 0
