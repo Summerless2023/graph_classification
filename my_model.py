@@ -31,14 +31,14 @@ class GraphClassifier(nn.Module):
 	def forward(self, x1, x2, adj1, adj2):
 		x1 = self.layer1(x1).cuda()
 		x2 = self.layer2(x2).cuda()
-		# print("1.encoder finished !", time.asctime(time.localtime(time.time())))
+		print("1.encoder finished !", time.asctime(time.localtime(time.time())))
 		new1 = self.self_attention(x1, adj1).cuda()
 		new2 = self.self_attention(x2, adj2).cuda()
-		# print("2.attention finished !", time.asctime( time.localtime(time.time()) ))
+		print("2.attention finished !", time.asctime(time.localtime(time.time())))
 		new_fea = torch.cat((new1, new2)).view(1, -1).cuda()
 		x = self.classfier(new_fea).cuda()
 		x = self.softmax(x)
-		# print("3.forward finished !", time.asctime( time.localtime(time.time()) ))
+		print("3.forward finished !", time.asctime(time.localtime(time.time())))
 		return x
 
 	def self_attention(self, x, adj):
