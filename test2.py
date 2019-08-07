@@ -14,14 +14,15 @@ import torch.nn as nn
 loss = nn.CrossEntropyLoss()
 # input, NxC=2x3
 input = torch.randn(1, 2, requires_grad=True)
-# target, N
-target = torch.empty(1, dtype=torch.long)
-target[0] = 1
+# input = torch.empty(1,2, requires_grad=True)
+input[0][0] = 1
+input[0][1] = 0
+# # target, N
+target = torch.randint(2, (1,), dtype=torch.int64)
 print(input.size())
 print(input)
 print(target.size())
 print(target)
 output = loss(input, target)
-output.backward()
-
+# output.backward()
 print(output.data.item())
